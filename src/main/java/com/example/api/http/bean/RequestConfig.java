@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 
@@ -36,12 +37,14 @@ public class RequestConfig {
     private String responseEncoding;
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private String defaultEncoding = "utf-8";
+
     private String config;
 
     public RequestConfig() {
     }
 
-    public RequestConfig(HashMap<String, Object> config) throws UnsupportedEncodingException {
+    public RequestConfig(HashMap<String, Object> config) {
         this.url = pauseUrl(config);
         this.headers = pauseHeader(config);
         this.responseType = pauseResponseType(config);
@@ -55,7 +58,20 @@ public class RequestConfig {
         if (contentTypeHeader == null) {
             return false;
         }
-        return "application/json".equals(contentTypeHeader.getValue());
+        return contentTypeHeader.getValue().trim().toLowerCase().startsWith("application/json");
+    }
+
+    public String getRequestEncoding() {
+        Header contentTypeHeader = getHeader("Content-Type");
+        if (contentTypeHeader == null) {
+            return defaultEncoding;
+        }
+        String value = contentTypeHeader.getValue();
+        int index = value.lastIndexOf("charset");
+        if (index != -1) {
+            return value.substring(index + 8);
+        }
+        return defaultEncoding;
     }
 
     public Header getHeader(String name) {
@@ -94,7 +110,7 @@ public class RequestConfig {
                 .toArray(Header[]::new);
     }
 
-    private HttpEntity pauseStringEntity(HashMap<String, Object> config) throws UnsupportedEncodingException {
+    private HttpEntity pauseStringEntity(HashMap<String, Object> config) {
         Object entity = config.get("entity");
 
         if (entity == null) {
@@ -108,7 +124,7 @@ public class RequestConfig {
                 e.printStackTrace();
             }
         }
-        return new StringEntity(stringEntity);
+        return new StringEntity(stringEntity, getRequestEncoding());
     }
 
     @Override

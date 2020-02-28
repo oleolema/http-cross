@@ -1,0 +1,26 @@
+{
+        "args": {},
+        "data": "",
+        "files": {},
+        "form": {
+            "domain": "common",
+            "from": "en",
+            "query": "apple",
+            "sign": "704513.926512",
+            "simple_means_flag": "3",
+            "to": "zh",
+            "token": "7ea7a24a2002d3ae65b7aec02601abd8"
+        },
+        "headers": {
+            "Accept-Encoding": "gzip,deflate",
+            "Content-Length": "117",
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Cookie": "BAIDUID=C634BC26A07FFC3BB463812C867B00BF:FG=1; REALTIME_TRANS_SWITCH=1; FANYI_WORD_SWITCH=1; HISTORY_SWITCH=1; SOUND_SPD_SWITCH=1; SOUND_PREFER_SWITCH=1; Hm_lvt_64ecd82404c51e03dc91cb9e8c025574=1581759652,1582681918; from_lang_often=%5B%7B%22value%22%3A%22zh%22%2C%22text%22%3A%22%u4E2D%u6587%22%7D%2C%7B%22value%22%3A%22en%22%2C%22text%22%3A%22%u82F1%u8BED%22%7D%5D; to_lang_often=%5B%7B%22value%22%3A%22en%22%2C%22text%22%3A%22%u82F1%u8BED%22%7D%2C%7B%22value%22%3A%22zh%22%2C%22text%22%3A%22%u4E2D%u6587%22%7D%5D; __yjsv5_shitong=1.0_7_88bcd8027081b546dd959d3e49e3412e03bb_300_1582683771397_183.227.114.208_eee5ae26; yjs_js_security_passport=d76c302a8f67b0a27bc7fac6b808719abed0b4cd_1582683772_js; Hm_lpvt_64ecd82404c51e03dc91cb9e8c025574=1582683781",
+            "Host": "httpbin.org",
+            "User-Agent": "Apache-HttpClient/4.5.10 (Java/1.8.0_161)",
+            "X-Amzn-Trace-Id": "Root=1-5e586b76-d090426c3a95e5cc761a7c24"
+        },
+        "json": null,
+        "origin": "183.227.114.51",
+        "url": "https://httpbin.org/post"
+    }

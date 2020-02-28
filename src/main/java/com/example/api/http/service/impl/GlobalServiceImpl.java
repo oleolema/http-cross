@@ -42,7 +42,7 @@ public class GlobalServiceImpl implements GlobalService {
 
     @Override
     public Object post(RequestConfig config) throws IOException {
-        log.info("post " + config);
+        log.info("POST " + config);
         HttpPost httpPost = new HttpPost(config.getUrl());
         httpPost.setHeaders(config.getHeaders());
         httpPost.setEntity(config.getEntity());
@@ -52,7 +52,7 @@ public class GlobalServiceImpl implements GlobalService {
 
     @Override
     public Object get(RequestConfig config) throws IOException {
-        log.info("get " + config);
+        log.info("GET " + config);
         HttpGet httpGet = new HttpGet(config.getUrl());
         httpGet.setHeaders(config.getHeaders());
         return execute(httpGet, config.getResponseType(), config.getResponseEncoding());
