@@ -120,7 +120,10 @@ xhr.send(data);
     "responseType": "json",
 
     //响应体编码 默认为utf-8
-    "responseEncoding": "gbk"
+    "responseEncoding": "gbk",
+    
+    //http 协议  ["http/1.1", "http/2"]   default = "http/1.1"
+    "protocol": "http/1.1"
 
 }
 ```

@@ -8,6 +8,7 @@
  */
 package com.example.api.http.bean;
 
+import com.example.api.http.common.Constant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -16,6 +17,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
+import org.apache.tomcat.util.bcel.Const;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -37,6 +39,10 @@ public class RequestConfig {
     private String responseEncoding;
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private String entityString;
+
+    private String protocol;
+
     private String defaultEncoding = "utf-8";
 
     private String config;
@@ -51,6 +57,9 @@ public class RequestConfig {
         this.responseEncoding = pauseResponseEncoding(config);
         this.entity = pauseStringEntity(config);
         this.config = config.toString();
+        this.protocol = pauseProtocol(config);
+
+
     }
 
     public boolean isRequestJson() {
@@ -76,7 +85,7 @@ public class RequestConfig {
 
     public Header getHeader(String name) {
         for (Header header : headers) {
-            if (header.getName().equals(name)) {
+            if (header.getName().equalsIgnoreCase(name)) {
                 return header;
             }
         }
@@ -110,6 +119,15 @@ public class RequestConfig {
                 .toArray(Header[]::new);
     }
 
+    private String pauseProtocol(HashMap<String, Object> config) {
+        String str = (String) config.get("protocol");
+        if (str == null) {
+            return Constant.Http_Protocol.HTTP_1;
+        }
+        return str;
+    }
+
+
     private HttpEntity pauseStringEntity(HashMap<String, Object> config) {
         Object entity = config.get("entity");
 
@@ -124,6 +142,7 @@ public class RequestConfig {
                 e.printStackTrace();
             }
         }
+        this.entityString = stringEntity;
         return new StringEntity(stringEntity, getRequestEncoding());
     }
 

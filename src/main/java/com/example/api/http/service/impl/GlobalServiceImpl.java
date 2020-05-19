@@ -9,6 +9,7 @@
 package com.example.api.http.service.impl;
 
 import com.example.api.http.bean.RequestConfig;
+import com.example.api.http.common.Constant;
 import com.example.api.http.service.GlobalService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +22,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -35,14 +37,21 @@ import java.io.IOException;
 @Service
 @Slf4j
 @CacheConfig(cacheNames = {"http"})
+@Primary
 public class GlobalServiceImpl implements GlobalService {
 
     @Autowired
     CloseableHttpClient closeableHttpClient;
 
+    @Autowired
+    H2ServiceImpl h2Service;
+
     @Override
     public Object post(RequestConfig config) throws IOException {
         log.info("POST " + config);
+        if (config.getProtocol().equals(Constant.Http_Protocol.HTTP_2)) {
+            return h2Service.post(config);
+        }
         HttpPost httpPost = new HttpPost(config.getUrl());
         httpPost.setHeaders(config.getHeaders());
         httpPost.setEntity(config.getEntity());
@@ -53,6 +62,9 @@ public class GlobalServiceImpl implements GlobalService {
     @Override
     public Object get(RequestConfig config) throws IOException {
         log.info("GET " + config);
+        if (config.getProtocol().equals(Constant.Http_Protocol.HTTP_2)) {
+            return h2Service.get(config);
+        }
         HttpGet httpGet = new HttpGet(config.getUrl());
         httpGet.setHeaders(config.getHeaders());
         return execute(httpGet, config.getResponseType(), config.getResponseEncoding());
