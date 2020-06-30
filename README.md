@@ -51,9 +51,9 @@ xhr.addEventListener("readystatechange", function () {
     }
 });
 
-xhr.open("POST", "http://localhost:8080/api/post");
+xhr.open("POST", "http://localhost:8080/api/http/post");
 xhr.setRequestHeader("Content-Type", "application/json");
-
+xhr.send(data);
 ```
 
 GET 请求一张网页
@@ -72,7 +72,7 @@ xhr.addEventListener("readystatechange", function () {
     }
 });
 
-xhr.open("POST", "http://localhost:8080/api/get");
+xhr.open("POST", "http://localhost:8080/api/http/get");
 xhr.setRequestHeader("Content-Type", "application/json");
 
 xhr.send(data);
