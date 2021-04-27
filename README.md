@@ -91,7 +91,7 @@ xhr.send(data);
 因为请求体是JSON格式
 
 请求体配置：
-```json
+```js
 {
     //URL，必选
     "url": "目标URL",
